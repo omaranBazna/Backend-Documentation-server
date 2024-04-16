@@ -1,0 +1,27 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Check out the repository
+      - uses: actions/checkout@v2
+
+      # Use an API token to authenticate with Render
+      - name: Deploy to Render
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceId": "Backend-Documentation-server"}' \
+            https://api.render.com/v1/services/Backend-Documentation-server/deploys
+
+        env:
+          # Replace with your Render API key
+          RENDER_API_KEY: ${{rnd_GifSZuTxLoIlLXA2d9Z8E1btXLW9}}
