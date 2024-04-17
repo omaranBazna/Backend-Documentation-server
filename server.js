@@ -3,11 +3,11 @@ const app=express()
 const cors=require("cors")
 const fs=require("fs")
 app.use(cors())
-app.get("/",(req,res)=>{
-   
-    fs.readFile(__dirname+"/documentation/introduction.md","utf8",(err,data)=>{
+app.get("/:dir",(req,res)=>{
+    let dir=req.params.dir
+    fs.readFile(__dirname+"/documentation/"+dir+".md","utf8",(err,data)=>{
        if(err){
-        return res.send({error:true})
+        return res.send({md:"# Not Found"})
        }
     
         res.send({md:data})
